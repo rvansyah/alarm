@@ -2,13 +2,18 @@ import streamlit as st
 import datetime
 from streamlit_extras.st_autorefresh import st_autorefresh
 
-st_autorefresh(interval=1000, key="alarmrefresh")  # refresh setiap detik
+# Otomatis refresh setiap 1 detik (1000 ms)
+st_autorefresh(interval=1000, key="alarmrefresh")
 
+st.set_page_config(page_title="Alarm App", page_icon="⏰")
 st.title("⏰ Streamlit Alarm App")
 st.write("Setel waktu alarm. Aplikasi harus terbuka agar alarm bisa berbunyi.")
 
-alarm_time = st.time_input("Waktu Alarm", value=(datetime.datetime.now() + datetime.timedelta(minutes=1)).time())
-set_alarm = st.button("Set Alarm")
+col1, col2 = st.columns(2)
+with col1:
+    alarm_time = st.time_input("Waktu Alarm", value=(datetime.datetime.now() + datetime.timedelta(minutes=1)).time())
+with col2:
+    set_alarm = st.button("Set Alarm")
 
 if "alarm_set" not in st.session_state:
     st.session_state["alarm_set"] = False
